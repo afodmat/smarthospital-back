@@ -1,0 +1,43 @@
+{
+  "name": "smart_hospital_system",
+  "version": "1.0.0",
+  "description": "\"# smart-hospital-system\"",
+  "homepage": "https://github.com/afodmat/smart-hospital-system#readme",
+  "bugs": {
+    "url": "https://github.com/afodmat/smart-hospital-system/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afodmat/smart-hospital-system.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "build": "npx prisma generate"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "@supabase/supabase-js": "^2.110.9",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "google-auth-library": "^11.0.0",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^9.0.3",
+    "otplib": "^13.4.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^7.9.1"
+  }
+}

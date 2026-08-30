@@ -1,0 +1,13 @@
+export const ROLES = {
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  ADMIN: 'ADMIN',
+  DOCTOR: 'DOCTOR',
+  NURSE: 'NURSE',
+  RECEPTIONIST: 'RECEPTIONIST',
+  PATIENT: 'PATIENT',
+  IT_STAFF: 'IT_STAFF'
+};
+
+export const ROLE_PERMISSIONS = {
+    [ROLES.SUPER_ADMIN]:['manage_users']
+}
