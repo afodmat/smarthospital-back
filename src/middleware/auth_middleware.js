@@ -2,12 +2,15 @@
 import jwt from 'jsonwebtoken';
 import { prisma } from '../config/db.js';
 
+
+
 /**
  * Middleware to authenticate a user
  * Extracts JWT from cookie or Authorization header
  */
 export const authenticate = async (req, res, next) => {
     try {
+        console.log("🍪 Cookies:", req.cookies);console.log("👤 Authorization:", req.headers.authorization);
         const authHeader = req.headers.authorization;
 
         const token =

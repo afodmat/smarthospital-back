@@ -18,6 +18,11 @@ function getAppUrl() {
   return process.env.APP_URL || `http://localhost:${process.env.PORT}`;
 }
 
+function getFrontendLoginUrl() {
+  const frontendUrl = process.env.FRONTEND_URL || "http://127.0.0.1:5500";
+  return `${frontendUrl.replace(/\/$/, "")}/login.html`;
+}
+
 function getGoogleClient() {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -115,6 +120,7 @@ export const registerController = async(req , res , next )=>{
 
 export async function verifyEmailController(req, res, next) {
     const token = req.query.token;
+  const frontendLoginUrl = getFrontendLoginUrl();
 
     if (!token) {
         return res.status(400).json({ 
@@ -160,7 +166,7 @@ export async function verifyEmailController(req, res, next) {
                         <div class="icon">✅</div>
                         <h1>Email Already Verified</h1>
                         <p>Your email address has already been verified.</p>
-                        <a href="/login" class="btn">Go to Login</a>
+                        <a href="${frontendLoginUrl}" class="btn">Go to Login</a>
                     </div>
                 </body>
                 </html>
@@ -193,7 +199,7 @@ export async function verifyEmailController(req, res, next) {
                     <div class="icon">🎉</div>
                     <h1>Email Verified Successfully!</h1>
                     <p>Your email address has been confirmed. You can now log in to your account.</p>
-                    <a href="/login" class="btn">Go to Login</a>
+                    <a href="${frontendLoginUrl}" class="btn">Go to Login</a>
                 </div>
             </body>
             </html>
@@ -375,10 +381,11 @@ try {
     const isProd = process.env.NODE_ENV === "production";
 
     res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: isProd,  // ← true in production
-    sameSite: isProd ? "none" : "lax",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
     });
 
     return res.status(200).json({

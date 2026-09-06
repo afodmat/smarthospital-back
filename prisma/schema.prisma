@@ -60,6 +60,7 @@ model Patient {
   createdAt DateTime @default(now())   
   updatedAt DateTime @updatedAt                     
   deletedAt DateTime? 
+   appointments Appointment[]
 }
 
 model Doctor {
@@ -75,4 +76,33 @@ model Doctor {
   createdAt DateTime @default(now())   
   updatedAt DateTime @updatedAt                     
   deletedAt DateTime? 
+  appointments Appointment[]
+}
+
+model Appointment {
+  id Int @id @default(autoincrement())
+  doctorId Int 
+  patientId Int
+  doctor        Doctor            @relation(fields: [doctorId], references: [id])
+  patient      Patient           @relation(fields: [patientId], references: [id])
+  scheduledAt DateTime ?
+  type AppointmentType
+  symptoms String?
+  additionalInfo String?
+  status AppointmentStatus @default(pending)
+  createdAt DateTime @default(now())   
+  updatedAt DateTime @updatedAt                     
+  deletedAt DateTime? 
+}
+
+enum AppointmentType {
+  in_person_visit
+  virtual_consultation
+  phone_consultation
+}
+
+enum AppointmentStatus {
+  pending
+  confirmed
+  cancelled
 }
