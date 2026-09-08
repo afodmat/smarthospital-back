@@ -378,7 +378,7 @@ export const updateAppointment = async (req, res) => {
         }
 
         const updateData = {};
-        if (result.data.scheduledAt) updateData.scheduledAt = new Date(result.date.scheduledAt);
+        if (result.data.scheduledAt) updateData.scheduledAt = new Data(result.date.scheduledAt);
         
         if (result.data.type) updateData.type = result.data.type;
         if (result.data.symptoms !== undefined) updateData.symptoms = result.data.symptoms;
