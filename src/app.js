@@ -22,7 +22,7 @@ const allowedOrigins = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://smart-hospitalsystem.netlify.app",
+    process.env.FRONTEND_URL,
 ];
 
 app.use(cors({

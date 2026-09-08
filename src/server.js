@@ -5,14 +5,15 @@ import app from "./app.js";
 
 dotenv.config();
 
+const PORT = process.env.PORT || 5001;
 async function startServer() {
     await connectDB();
 
   const server = http.createServer(app);
 
-  server.listen(process.env.PORT, () => {
-    console.log(`Server is now listening to port ${process.env.PORT}`);
-  });
+  app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
 }
 
 startServer().catch((err) => {

@@ -7,6 +7,6 @@ const router = Router();
 router.get('/', getAllPatientsController);
 router.get("/me", authenticate, getMyPatientController);
 router.get("/:id", getPatientByIdController);
-router.put("/update/:id", updatePatientProfileController);
+router.put("/me", authenticate, updatePatientProfileController);
 
 export default router;
