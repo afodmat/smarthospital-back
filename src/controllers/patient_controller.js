@@ -137,7 +137,7 @@ export const getPatientByIdController = async (req, res) => {
 
 export const getMyPatientController = async (req, res) => {
     try {
-        const patient = await prisma.patient.findUnique({
+        let patient = await prisma.patient.findUnique({
             where: {
                 userId: req.user.id
             },
@@ -155,6 +155,25 @@ export const getMyPatientController = async (req, res) => {
                 }
             }
         });
+
+        if (!patient && req.user.role === 'PATIENT') {
+            patient = await prisma.patient.create({
+                data: { userId: req.user.id },
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            firstName: true,
+                            lastName: true,
+                            otherNames: true,
+                            email: true,
+                            role: true,
+                            isEmailVerified: true
+                        }
+                    }
+                }
+            });
+        }
 
         if (!patient) {
             return res.status(404).json({
