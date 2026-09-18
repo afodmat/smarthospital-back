@@ -276,10 +276,16 @@ export const createAppointment = async (req, res) => {
         }
 
         // Check if patient exists
-        const patient = await prisma.patient.findFirst({
+        let patient = await prisma.patient.findFirst({
             where: { userId: req.user.id
             }
         });
+
+        if (!patient && req.user.role === 'PATIENT') {
+            patient = await prisma.patient.create({
+                data: { userId: req.user.id }
+            });
+        }
 
         if (!patient) {
             return res.status(404).json({

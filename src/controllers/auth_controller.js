@@ -66,7 +66,7 @@ export const registerController = async(req , res , next )=>{
     const passwordHash = await hashPassword(password);
 
     const newlyCreatedUser = await prisma.user.create({
-        data : {
+      data : {
     email: normalizedEmail,
     password: passwordHash,
     role: "PATIENT",
@@ -74,7 +74,10 @@ export const registerController = async(req , res , next )=>{
     twoFactorEnabled: false,
     firstName,
     lastName,
-    otherNames
+    otherNames,
+    patient: {
+      create: {}
+    }
         }
     });
 
