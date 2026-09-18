@@ -381,13 +381,21 @@ try {
 
     const refreshToken = createRefreshToken(user.id, user.tokenVersion);
 
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://");
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      maxAge: 30 * 60 * 1000,
       path: "/",
     });
 
@@ -441,7 +449,7 @@ export async function refreshController(req,res,next){
 
         const newRefreshToken = createRefreshToken(user.id, user.tokenVersion);
 
-        const isProd = process.env.NODE_ENV === "production";
+        const isProd = process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://");
 
         res.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
@@ -449,6 +457,14 @@ export async function refreshController(req,res,next){
             sameSite: isProd ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
+        });
+
+        res.cookie("accessToken", newAccessToken, {
+          httpOnly: true,
+          secure: isProd,
+          sameSite: isProd ? "none" : "lax",
+          maxAge: 30 * 60 * 1000,
+          path: "/"
         });
 
         return res.status(200).json({
@@ -472,13 +488,19 @@ export async function refreshController(req,res,next){
 }
 
 export async function logoutController(req, res) {
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://");
 
     res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: isProd,
         sameSite: isProd ? "none" : "lax",
         path: "/"
+    });
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      path: "/"
     });
 
     return res.status(200).json({
@@ -697,7 +719,7 @@ export async function googleAuthCallBackController(req, res, next){
 
     const refreshToken = createRefreshToken(user.id, user.tokenVersion);
 
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://");
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
