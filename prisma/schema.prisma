@@ -61,6 +61,7 @@ model Patient {
   updatedAt DateTime @updatedAt                     
   deletedAt DateTime? 
    appointments Appointment[]
+   prescriptions Prescription[]
 }
 
 model Doctor {
@@ -77,6 +78,7 @@ model Doctor {
   updatedAt DateTime @updatedAt                     
   deletedAt DateTime? 
   appointments Appointment[]
+  prescriptions Prescription[]
 }
 
 model Appointment {
@@ -105,4 +107,19 @@ enum AppointmentStatus {
   pending
   confirmed
   cancelled
+  scheduled_At
+  completed
+}
+
+model Prescription {
+  id Int @id @default(autoincrement())
+  doctorId Int
+  patientId Int
+  doctor Doctor @relation(fields: [doctorId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
+  medications String[]
+  instructions String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 }
