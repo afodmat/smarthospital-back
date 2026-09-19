@@ -6,6 +6,7 @@ import doctorRouter from '../src/routes/doctor_routes.js';
 import adminRouter from '../src/routes/admin_routes.js';
 import appointmentRouter from '../src/routes/appointment_routes.js';
 import reportRouter from './routes/report_routes.js';
+import prescriptionRouter from './routes/prescription_routes.js';
 import cors from "cors";
 import dotenv from  'dotenv';
 
@@ -56,7 +57,7 @@ app.use('/doctors', doctorRouter);
 app.use('/admins', adminRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/reports', reportRouter);
-
+app.use('/prescriptions', prescriptionRouter);
 
 
 
